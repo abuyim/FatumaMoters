@@ -6,13 +6,15 @@
   "scripts": {
     "dev": "concurrently \"npm:dev:server\" \"npm:dev:client\"",
     "dev:client": "vite",
-    "dev:server": "node --watch server/index.js",
+    "dev:server": "node --env-file-if-exists=.env --watch server/index.js",
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "node server/index.js",
+    "preview": "node --env-file-if-exists=.env server/index.js",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "migrate:mysql": "node --env-file-if-exists=.env server/scripts/migrate-mysql.js",
+    "seed:mysql": "node --env-file-if-exists=.env server/scripts/seed-mysql.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Shield, ThumbsUp, Wrench, Truck, Star, ChevronRight, Award, MessageCircle, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import VehicleCard from "@/components/VehicleCard";
 import SectionHeading from "@/components/SectionHeading";
 import Layout from "@/components/Layout";
@@ -8,12 +9,44 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import HeroSlider from "@/components/HeroSlider";
 import { PageError, PageLoader } from "@/components/PageState";
 import { useSiteContent, useVehicles } from "@/hooks/use-site-data";
+import { useState } from "react";
 
 const iconCycle = [Shield, CreditCard, Wrench, Truck, ThumbsUp, Award];
+const bajajShowcase = [
+  {
+    id: "bajaj-01",
+    image: "/images/photo_2026-04-24_19-51-31.jpg",
+    title: "Bajaj 01",
+    short: "Entry model with practical everyday performance.",
+    details: "Bajaj 01 is designed for daily commuting with dependable fuel economy, comfortable seating, and easy maintenance.",
+  },
+  {
+    id: "bajaj-02",
+    image: "/images/photo_2026-04-24_19-51-31 (2).jpg",
+    title: "Bajaj 02",
+    short: "Sport-inspired design with strong road presence.",
+    details: "Bajaj 02 combines modern styling with reliable engine output, making it suitable for riders who want performance and comfort.",
+  },
+  {
+    id: "bajaj-03",
+    image: "/images/photo_2026-04-24_19-51-32.jpg",
+    title: "Bajaj 03",
+    short: "Business-friendly model for city operation.",
+    details: "Bajaj 03 offers a rugged setup and operating efficiency, ideal for delivery services and high-frequency local transport.",
+  },
+  {
+    id: "bajaj-04",
+    image: "/images/photo_2026-04-25_15-12-05.jpg",
+    title: "Bajaj 04",
+    short: "Passenger-focused option with comfort in mind.",
+    details: "Bajaj 04 provides a stable and comfortable ride experience with strong earning potential for passenger transport operators.",
+  },
+];
 
 const Index = () => {
   const contentQuery = useSiteContent();
   const vehiclesQuery = useVehicles();
+  const [selectedShowcase, setSelectedShowcase] = useState<(typeof bajajShowcase)[number] | null>(null);
 
   if (contentQuery.isLoading || vehiclesQuery.isLoading) {
     return (
@@ -68,6 +101,49 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      <section className="py-16 md:py-24">
+        <div className="container">
+          <SectionHeading
+            label="Bajaj Images"
+            title="Bajaj 01, 02, 03 and 04"
+            description="Click any Bajaj image to see a detailed description and better understand which model fits your needs."
+          />
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {bajajShowcase.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className="group overflow-hidden rounded-xl border border-border bg-card text-left"
+                onClick={() => setSelectedShowcase(item)}
+              >
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-heading text-lg font-bold text-foreground">{item.title}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">{item.short}</p>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <Dialog open={Boolean(selectedShowcase)} onOpenChange={(open) => !open && setSelectedShowcase(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{selectedShowcase?.title}</DialogTitle>
+            <DialogDescription>{selectedShowcase?.details}</DialogDescription>
+          </DialogHeader>
+          {selectedShowcase ? (
+            <div className="overflow-hidden rounded-lg border border-border">
+              <img src={selectedShowcase.image} alt={selectedShowcase.title} className="h-full w-full object-cover" />
+            </div>
+          ) : null}
+        </DialogContent>
+      </Dialog>
 
       <section className="py-16 md:py-24">
         <div className="container">
