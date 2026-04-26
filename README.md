@@ -1,7 +1,7 @@
 # FatumaMotors
 
 ## Admin login
-- Admin panel URL: `/admin/login`
+- Admin panel URL: `/admin/login` (alias: `/login`)
 - Default credentials (when not set via environment variables):
   - Username: `admin`
   - Password: `admin123`
@@ -39,3 +39,14 @@ When MySQL is enabled, these are stored in MySQL and managed by admin:
 - Gallery product source data (from vehicles)
 - Inquiries/order requests
 - Admin users (for login)
+
+## Dynamic section CRUD API (admin only)
+- `GET /api/admin/sections` → list top-level section keys
+- `GET /api/admin/sections/:path` → get any nested section by dot path
+- `PUT /api/admin/sections/:path` with `{ "value": ... }` → update/create section
+- `DELETE /api/admin/sections/:path` → remove section
+
+Examples of section paths:
+- `home.heroSlides`
+- `aboutPage.story`
+- `site.socialMedia`
