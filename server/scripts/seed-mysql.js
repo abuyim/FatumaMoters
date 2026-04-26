@@ -70,6 +70,9 @@ try {
   console.log(`Seeded vehicles: ${(snapshot.vehicles || []).length}`);
   console.log(`Seeded inquiries: ${(snapshot.inquiries || []).length}`);
 } catch (error) {
+  if ((error.code === "ERR_MODULE_NOT_FOUND" || String(error.message).includes("Cannot find package 'mysql2'"))) {
+    console.error("mysql2 package is missing. Install it first with: npm install mysql2");
+  }
   console.error("Failed to seed MySQL:", error.message);
   process.exit(1);
 }
