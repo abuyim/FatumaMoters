@@ -27,74 +27,89 @@ export class DataStore {
   async init() {
     if (!this.useMysql) return;
 
-    const mysqlModule = await import("mysql2/promise");
-    this.mysql = mysqlModule.default || mysqlModule;
-    this.pool = this.mysql.createPool({
-      host: process.env.MYSQL_HOST,
-      port: Number(process.env.MYSQL_PORT || 3306),
-      user: process.env.MYSQL_USER || "root",
-      password: process.env.MYSQL_PASSWORD || "",
-      database: process.env.MYSQL_DATABASE || "fatumamotors",
-      connectionLimit: Number(process.env.MYSQL_CONNECTION_LIMIT || 10),
-    });
+    try {
+      const mysqlModule = await import("mysql2/promise");
+      this.mysql = mysqlModule.default || mysqlModule;
+      this.pool = this.mysql.createPool({
+        host: process.env.MYSQL_HOST,
+        port: Number(process.env.MYSQL_PORT || 3306),
+        user: process.env.MYSQL_USER || "root",
+        password: process.env.MYSQL_PASSWORD || "",
+        database: process.env.MYSQL_DATABASE || "fatumamotors",
+        connectionLimit: Number(process.env.MYSQL_CONNECTION_LIMIT || 10),
+      });
+    } catch (error) {
+      console.warn("MySQL backend requested but mysql2 is unavailable. Falling back to JSON storage.");
+      this.useMysql = false;
+      this.mysql = null;
+      this.pool = null;
+      return;
+    }
 
-    await this.pool.query(`
-      CREATE TABLE IF NOT EXISTS site_content (
-        id INT PRIMARY KEY,
-        content_json LONGTEXT NOT NULL
-      )
-    `);
+    try {
+      await this.pool.query(`
+        CREATE TABLE IF NOT EXISTS site_content (
+          id INT PRIMARY KEY,
+          content_json LONGTEXT NOT NULL
+        )
+      `);
 
-    await this.pool.query(`
-      CREATE TABLE IF NOT EXISTS vehicles (
-        id VARCHAR(191) PRIMARY KEY,
-        data_json LONGTEXT NOT NULL
-      )
-    `);
+      await this.pool.query(`
+        CREATE TABLE IF NOT EXISTS vehicles (
+          id VARCHAR(191) PRIMARY KEY,
+          data_json LONGTEXT NOT NULL
+        )
+      `);
 
-    await this.pool.query(`
-      CREATE TABLE IF NOT EXISTS inquiries (
-        id VARCHAR(191) PRIMARY KEY,
-        data_json LONGTEXT NOT NULL,
-        created_at DATETIME NOT NULL
-      )
-    `);
+      await this.pool.query(`
+        CREATE TABLE IF NOT EXISTS inquiries (
+          id VARCHAR(191) PRIMARY KEY,
+          data_json LONGTEXT NOT NULL,
+          created_at DATETIME NOT NULL
+        )
+      `);
 
-    await this.pool.query(`
-      CREATE TABLE IF NOT EXISTS admin_users (
-        username VARCHAR(191) PRIMARY KEY,
-        password_hash VARCHAR(255) NOT NULL,
-        created_at DATETIME NOT NULL
-      )
-    `);
+      await this.pool.query(`
+        CREATE TABLE IF NOT EXISTS admin_users (
+          username VARCHAR(191) PRIMARY KEY,
+          password_hash VARCHAR(255) NOT NULL,
+          created_at DATETIME NOT NULL
+        )
+      `);
 
-    const defaultAdminUser = process.env.ADMIN_USERNAME || "admin";
-    const defaultAdminPass = process.env.ADMIN_PASSWORD || "admin123";
+      const defaultAdminUser = process.env.ADMIN_USERNAME || "admin";
+      const defaultAdminPass = process.env.ADMIN_PASSWORD || "admin123";
 
-    await this.pool.query(
-      `
-      INSERT INTO admin_users (username, password_hash, created_at)
-      VALUES (?, ?, NOW())
-      ON DUPLICATE KEY UPDATE username = username
-    `,
-      [defaultAdminUser, hashPassword(defaultAdminPass)],
-    );
+      await this.pool.query(
+        `
+        INSERT INTO admin_users (username, password_hash, created_at)
+        VALUES (?, ?, NOW())
+        ON DUPLICATE KEY UPDATE username = username
+      `,
+        [defaultAdminUser, hashPassword(defaultAdminPass)],
+      );
 
-    const [contentRows] = await this.pool.query("SELECT id FROM site_content WHERE id = 1");
-    if (contentRows.length === 0) {
-      const snapshot = await this.readJsonSnapshot();
-      await this.pool.query("INSERT INTO site_content (id, content_json) VALUES (1, ?)", [JSON.stringify(snapshot.content)]);
-      for (const vehicle of snapshot.vehicles || []) {
-        await this.pool.query("INSERT INTO vehicles (id, data_json) VALUES (?, ?)", [vehicle.id || randomUUID(), JSON.stringify(vehicle)]);
+      const [contentRows] = await this.pool.query("SELECT id FROM site_content WHERE id = 1");
+      if (contentRows.length === 0) {
+        const snapshot = await this.readJsonSnapshot();
+        await this.pool.query("INSERT INTO site_content (id, content_json) VALUES (1, ?)", [JSON.stringify(snapshot.content)]);
+        for (const vehicle of snapshot.vehicles || []) {
+          await this.pool.query("INSERT INTO vehicles (id, data_json) VALUES (?, ?)", [vehicle.id || randomUUID(), JSON.stringify(vehicle)]);
+        }
+        for (const inquiry of snapshot.inquiries || []) {
+          const createdAt = inquiry.createdAt || new Date().toISOString();
+          await this.pool.query("INSERT INTO inquiries (id, data_json, created_at) VALUES (?, ?, ?)", [
+            inquiry.id || randomUUID(),
+            JSON.stringify({ ...inquiry, createdAt }),
+            new Date(createdAt),
+          ]);
+        }
       }
-      for (const inquiry of snapshot.inquiries || []) {
-        const createdAt = inquiry.createdAt || new Date().toISOString();
-        await this.pool.query("INSERT INTO inquiries (id, data_json, created_at) VALUES (?, ?, ?)", [
-          inquiry.id || randomUUID(),
-          JSON.stringify({ ...inquiry, createdAt }),
-          new Date(createdAt),
-        ]);
-      }
+    } catch (error) {
+      console.warn("MySQL connection/init failed. Falling back to JSON storage.");
+      this.useMysql = false;
+      this.mysql = null;
+      this.pool = null;
     }
   }
 

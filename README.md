@@ -28,6 +28,7 @@ Set these to enable MySQL:
 Schema file: `server/data/mysql-schema.sql`
 
 The app auto-creates required tables on startup and seeds data from `server/data/db.json` when MySQL tables are empty.
+If MySQL or `mysql2` is unavailable at runtime, the server automatically falls back to JSON storage.
 
 ## Managed content in DB
 When MySQL is enabled, these are stored in MySQL and managed by admin:
