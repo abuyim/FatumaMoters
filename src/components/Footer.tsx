@@ -7,6 +7,7 @@ const Footer = () => {
   const site = data?.site;
   const whatsappLink = `https://wa.me/${(site?.whatsapp || "+251911223344").replace(/\D/g, "")}`;
   const phoneHref = (site?.phone || "+251911223344").replace(/\s+/g, "");
+  const socialEntries = Object.entries(site?.socialMedia || {}).filter(([, value]) => Boolean(value));
 
   return (
     <footer className="border-t border-border bg-charcoal text-charcoal-foreground">
@@ -56,7 +57,13 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5 text-sm opacity-70">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
-                {site?.address || "Bole Road, Addis Ababa, Ethiopia"}
+                {site?.locationLink ? (
+                  <a href={site.locationLink} target="_blank" rel="noopener noreferrer" className="hover:opacity-100">
+                    {site?.address || "Bole Road, Addis Ababa, Ethiopia"}
+                  </a>
+                ) : (
+                  site?.address || "Bole Road, Addis Ababa, Ethiopia"
+                )}
               </li>
               <li className="flex items-center gap-2.5 text-sm opacity-70">
                 <Phone className="h-4 w-4 shrink-0" />
@@ -85,6 +92,24 @@ const Footer = () => {
                   WhatsApp Us
                 </a>
               </li>
+              {socialEntries.length > 0 ? (
+                <li className="pt-1">
+                  <p className="mb-2 text-xs uppercase tracking-widest opacity-60">Social Media</p>
+                  <div className="flex flex-wrap gap-2">
+                    {socialEntries.map(([platform, url]) => (
+                      <a
+                        key={platform}
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-md border border-charcoal-foreground/20 px-3 py-1 text-xs capitalize transition-opacity hover:opacity-100"
+                      >
+                        {platform}
+                      </a>
+                    ))}
+                  </div>
+                </li>
+              ) : null}
             </ul>
           </div>
         </div>
