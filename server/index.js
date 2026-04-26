@@ -173,7 +173,7 @@ app.delete("/api/inquiries/:id", async (req, res, next) => {
 
 app.use(express.static(distDir));
 
-app.get("*", async (req, res, next) => {
+app.get(/.*/, async (req, res, next) => {
   try {
     if (req.path.startsWith("/api/")) {
       res.status(404).json({ message: "API route not found." });
