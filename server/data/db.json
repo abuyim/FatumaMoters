@@ -1,0 +1,254 @@
+{
+  "content": {
+    "site": {
+      "name": "FatumaMotors",
+      "shortName": "FM",
+      "tagline": "Your trusted partner for motorcycles, Bajaj three-wheelers, and transport solutions.",
+      "phone": "+251 911 223 344",
+      "email": "info@fatumamotors.com",
+      "address": "Bole Road, Addis Ababa, Ethiopia",
+      "whatsapp": "+251911223344",
+      "businessHours": [
+        "Mon-Fri: 8:00 AM - 6:00 PM",
+        "Sat: 9:00 AM - 4:00 PM",
+        "Sun: Closed"
+      ],
+      "footerDescription": "Quality vehicles, honest service, flexible financing, and long-term support for riders, families, and fleet operators.",
+      "vehicleCategories": [
+        "Commuter Motorcycles",
+        "Sport Motorcycles",
+        "Passenger Bajaj",
+        "Cargo Bajaj",
+        "Fleet Packages"
+      ]
+    },
+    "home": {
+      "heroSlides": [
+        {
+          "id": "hero-slide-1",
+          "mediaType": "image",
+          "mediaUrl": "/hero-bg.jpg",
+          "eyebrow": "Authorized Bajaj Dealer",
+          "title": "Your trusted source for motorcycles and Bajaj vehicles",
+          "description": "Reliable motorcycles and three-wheelers for personal mobility, business transport, and growing delivery fleets.",
+          "primaryCtaLabel": "View Inventory",
+          "primaryCtaLink": "/inventory",
+          "secondaryCtaLabel": "Get a Quote",
+          "secondaryCtaLink": "/contact"
+        },
+        {
+          "id": "hero-slide-2",
+          "mediaType": "video",
+          "mediaUrl": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+          "eyebrow": "Fleet Solutions",
+          "title": "Image and video hero slides managed from one admin",
+          "description": "Showcase new arrivals, delivery fleets, financing campaigns, or customer success stories with short, editable slide copy.",
+          "primaryCtaLabel": "Talk to Sales",
+          "primaryCtaLink": "/contact",
+          "secondaryCtaLabel": "Browse Services",
+          "secondaryCtaLink": "/services"
+        }
+      ],
+      "stats": [
+        { "id": "stat-1", "value": "2,500+", "label": "Vehicles Sold" },
+        { "id": "stat-2", "value": "8+", "label": "Years Experience" },
+        { "id": "stat-3", "value": "98%", "label": "Customer Satisfaction" },
+        { "id": "stat-4", "value": "24/7", "label": "WhatsApp Support" }
+      ],
+      "featuredSection": {
+        "label": "Featured Vehicles",
+        "title": "Popular Picks from Our Showroom",
+        "description": "Explore our most sought-after motorcycles and Bajaj three-wheelers, chosen by riders and business owners across the city."
+      },
+      "whyUsIntro": {
+        "label": "Why FatumaMotors",
+        "title": "Built on trust, driven by quality",
+        "description": "We are more than a dealership. We are a long-term vehicle partner for commuting, delivery, and passenger transport."
+      },
+      "whyUsItems": [
+        { "id": "why-1", "title": "Authorized Dealer", "description": "Genuine Bajaj products with full manufacturer support and dependable documentation." },
+        { "id": "why-2", "title": "Flexible Financing", "description": "Affordable payment plans and purchase options tailored to your budget." },
+        { "id": "why-3", "title": "After-Sales Support", "description": "Maintenance guidance, spare parts access, and service referrals after delivery." },
+        { "id": "why-4", "title": "Fleet Solutions", "description": "Bulk pricing and support for logistics, ride-hailing, and transport businesses." },
+        { "id": "why-5", "title": "Trusted Service", "description": "Transparent pricing, practical advice, and responsive communication." },
+        { "id": "why-6", "title": "Quality Guaranteed", "description": "Every vehicle is reviewed before handover so customers receive a ready-to-work unit." }
+      ],
+      "financeCta": {
+        "title": "Flexible financing available",
+        "description": "Do not let budget slow down your next purchase. Speak with our team about custom payment plans.",
+        "primaryCtaLabel": "Apply for Financing",
+        "primaryCtaLink": "/contact",
+        "secondaryCtaLabel": "Chat on WhatsApp",
+        "secondaryCtaLink": "https://wa.me/251911223344"
+      },
+      "testimonialsIntro": {
+        "label": "Testimonials",
+        "title": "What our customers say",
+        "description": "Short reviews from buyers, operators, and fleet owners who rely on FatumaMotors."
+      },
+      "testimonials": [
+        { "id": "testimonial-1", "name": "Selam Tesfaye", "role": "Delivery Business Owner", "text": "FatumaMotors supplied our delivery fleet quickly and gave us clear maintenance guidance from day one.", "rating": 5 },
+        { "id": "testimonial-2", "name": "Abdulahi Musa", "role": "Bajaj Operator", "text": "The team helped me choose the right route-ready vehicle and stayed available after the purchase.", "rating": 5 },
+        { "id": "testimonial-3", "name": "Marta Kebede", "role": "Daily Commuter", "text": "My motorcycle has been reliable and fuel efficient, and the buying process was straightforward.", "rating": 5 }
+      ],
+      "faqIntro": {
+        "label": "FAQ",
+        "title": "Frequently asked questions",
+        "description": "Answers to common questions about financing, inventory, delivery, and support."
+      },
+      "faqs": [
+        { "id": "faq-1", "question": "Do you offer financing or installment payments?", "answer": "Yes. We work with financing partners and flexible payment structures depending on the vehicle and buyer profile." },
+        { "id": "faq-2", "question": "Are all vehicles brand new with warranty?", "answer": "Our listed inventory is brand new and backed by the relevant vehicle documentation and warranty details." },
+        { "id": "faq-3", "question": "Do you offer fleet or bulk discounts?", "answer": "Yes. Businesses buying multiple units can request custom fleet pricing and support packages." },
+        { "id": "faq-4", "question": "Can you deliver vehicles outside Addis Ababa?", "answer": "Yes. Delivery can be arranged based on destination and vehicle availability." }
+      ],
+      "finalCta": {
+        "title": "Ready to find your next vehicle?",
+        "description": "Browse the inventory or contact the sales team for a tailored recommendation.",
+        "primaryCtaLabel": "Browse Inventory",
+        "primaryCtaLink": "/inventory",
+        "secondaryCtaLabel": "Contact Us",
+        "secondaryCtaLink": "/contact"
+      }
+    },
+    "inventoryPage": {
+      "label": "Our Inventory",
+      "title": "Browse motorcycles and Bajaj vehicles",
+      "description": "Find the right vehicle for commuting, delivery, passenger transport, or fleet operations."
+    },
+    "aboutPage": {
+      "hero": {
+        "label": "About Us",
+        "title": "Driving business and mobility forward",
+        "description": "FatumaMotors helps individuals and transport businesses find dependable motorcycles and three-wheelers backed by responsive service."
+      },
+      "story": {
+        "label": "Our Story",
+        "title": "From a focused showroom to a trusted dealership",
+        "description": "We started with a practical mission: connect riders and operators with quality vehicles, clear pricing, and dependable after-sales help.",
+        "paragraphs": [
+          "FatumaMotors grew by staying close to what buyers actually need: durable vehicles, honest advice, and quick follow-up.",
+          "Today we serve individual riders, delivery teams, and transport operators with vehicles and support designed for daily use."
+        ],
+        "imageUrl": "/placeholder.svg",
+        "buttonLabel": "Get in Touch",
+        "buttonLink": "/contact"
+      },
+      "mission": {
+        "label": "Our Mission",
+        "title": "Empowering mobility and enabling livelihoods",
+        "description": "We believe practical transport creates opportunity. Our role is to make that transport more accessible, dependable, and easier to manage."
+      },
+      "valuesIntro": {
+        "label": "Our Values",
+        "title": "What we stand for",
+        "description": "The principles that shape how we sell, support, and communicate."
+      },
+      "values": [
+        { "id": "value-1", "title": "Customer Focus", "description": "Every decision starts with what is best for riders, operators, and fleet owners." },
+        { "id": "value-2", "title": "Transparency", "description": "Clear pricing, practical timelines, and direct communication." },
+        { "id": "value-3", "title": "Integrity", "description": "We stand behind the vehicles we sell and the commitments we make." },
+        { "id": "value-4", "title": "Quality First", "description": "Only genuine, well-documented vehicles should reach the customer." },
+        { "id": "value-5", "title": "Community", "description": "We support businesses and riders whose work depends on daily mobility." },
+        { "id": "value-6", "title": "Reliability", "description": "Dependable products and dependable responses are part of the service." }
+      ],
+      "cta": {
+        "title": "Let's work together",
+        "description": "Whether you need one motorcycle or an entire fleet, our team is ready to help.",
+        "primaryCtaLabel": "View Inventory",
+        "primaryCtaLink": "/inventory",
+        "secondaryCtaLabel": "Contact Us",
+        "secondaryCtaLink": "/contact"
+      }
+    },
+    "servicesPage": {
+      "hero": {
+        "label": "Our Services",
+        "title": "Vehicle solutions for individual buyers and fleet operators",
+        "description": "From sales to sourcing and after-sales support, FatumaMotors offers practical services around the full ownership lifecycle."
+      },
+      "services": [
+        { "id": "service-1", "title": "Vehicle Sales", "description": "Browse and purchase brand-new motorcycles and three-wheelers with transparent pricing and documentation.", "details": ["Wide model range", "Transparent pricing", "Vehicle documentation", "Financing support"] },
+        { "id": "service-2", "title": "Fleet Solutions", "description": "Custom packages for logistics teams, delivery companies, and transport operators.", "details": ["Bulk discounts", "Fleet consultation", "Priority support", "Operator guidance"] },
+        { "id": "service-3", "title": "Vehicle Sourcing", "description": "Need a specific model or configuration? We help source based on your operating requirements.", "details": ["Custom orders", "Configuration support", "Lead-time guidance", "Procurement follow-up"] },
+        { "id": "service-4", "title": "After-Sales Support", "description": "Support continues after purchase with maintenance guidance and spare parts help.", "details": ["Maintenance guidance", "Spare parts sourcing", "Warranty support", "Service referrals"] },
+        { "id": "service-5", "title": "Maintenance Guidance", "description": "Get practical help on service intervals, daily care, and operating best practices.", "details": ["Service schedules", "Troubleshooting tips", "Wear guidance", "Fuel optimization"] },
+        { "id": "service-6", "title": "Business Consultation", "description": "Planning to start or expand a transport business? We help evaluate fit and operational needs.", "details": ["Business planning", "Vehicle selection", "ROI thinking", "Operating advice"] }
+      ],
+      "cta": {
+        "title": "Need a custom solution?",
+        "description": "Talk to the team about your specific transport or fleet requirements.",
+        "primaryCtaLabel": "Contact Us",
+        "primaryCtaLink": "/contact"
+      }
+    },
+    "contactPage": {
+      "hero": {
+        "label": "Contact Us",
+        "title": "We would love to hear from you",
+        "description": "Have a question, need a quote, or want help choosing a model? Send us a message."
+      },
+      "detailsIntroTitle": "Get in touch",
+      "detailsIntroDescription": "Visit the showroom or contact us through any of the channels below.",
+      "formTitle": "Send us a message",
+      "formDescription": "Fields marked with an asterisk are required.",
+      "mapLabel": "Map - Bole Road, Addis Ababa",
+      "subjectOptions": ["vehicle-inquiry", "financing", "fleet", "after-sales", "other"]
+    }
+  },
+  "vehicles": [
+    {
+      "id": "bajaj-boxer-150",
+      "name": "Bajaj Boxer 150",
+      "type": "motorcycle",
+      "category": "Commuter",
+      "price": 185000,
+      "image": "/placeholder.svg",
+      "specs": { "engine": "149cc", "power": "14 HP", "fuelCapacity": "14L", "weight": "135 kg", "transmission": "5-Speed" },
+      "availability": "in-stock",
+      "description": "A rugged and fuel-efficient commuter motorcycle built for daily riders who need reliability and low running costs.",
+      "features": ["Fuel-efficient engine", "Electric start", "Tubeless tyres", "Comfortable seat", "Low maintenance cost"],
+      "popular": true
+    },
+    {
+      "id": "bajaj-pulsar-150",
+      "name": "Bajaj Pulsar 150",
+      "type": "motorcycle",
+      "category": "Sport Commuter",
+      "price": 295000,
+      "image": "/placeholder.svg",
+      "specs": { "engine": "149cc DTS-i", "power": "17 HP", "fuelCapacity": "15L", "weight": "148 kg", "transmission": "5-Speed" },
+      "availability": "in-stock",
+      "description": "Sporty styling with practical everyday performance and dependable fuel economy.",
+      "features": ["Twin-spark engine", "Split seat design", "Projection headlamp", "Digital-analog console", "Nitrox suspension"],
+      "popular": true
+    },
+    {
+      "id": "bajaj-ct-125",
+      "name": "Bajaj CT 125",
+      "type": "motorcycle",
+      "category": "Commuter",
+      "price": 145000,
+      "image": "/placeholder.svg",
+      "specs": { "engine": "124.4cc", "power": "10.9 HP", "fuelCapacity": "11L", "weight": "121 kg", "transmission": "5-Speed" },
+      "availability": "in-stock",
+      "description": "An affordable commuter motorcycle built for daily transportation and strong fuel economy.",
+      "features": ["High mileage", "Kick and electric start", "Comfortable ergonomics", "Durable build", "Affordable spare parts"],
+      "popular": false
+    },
+    {
+      "id": "bajaj-re-passenger",
+      "name": "Bajaj RE Passenger",
+      "type": "bajaj",
+      "category": "Passenger",
+      "price": 550000,
+      "image": "/placeholder.svg",
+      "specs": { "engine": "236cc", "power": "8.5 HP", "fuelCapacity": "8L", "weight": "356 kg", "transmission": "4-Speed" },
+      "availability": "in-stock",
+      "description": "A proven three-wheeler for passenger transport with durable operation and strong earning potential.",
+      "features": ["Durable chassis", "Low fuel consumption", "Easy maintenance", "Comfortable passenger cabin", "Business-ready"],
+      "popular": true
+    }
+  ],
+  "inquiries": []
+}
