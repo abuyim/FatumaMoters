@@ -10,6 +10,14 @@ You can override admin credentials with:
 - `ADMIN_USERNAME`
 - `ADMIN_PASSWORD`
 
+## Environment file
+- Example file is included: `.env.example`
+- Create your local env file by copying it to `.env` and editing values.
+
+Example:
+- `cp .env.example .env` (Linux/macOS)
+- `copy .env.example .env` (Windows CMD)
+
 ## Storage backends
 The server now supports **two backends**:
 1. **JSON file** (default): uses `server/data/db.json`
