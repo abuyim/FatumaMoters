@@ -80,7 +80,14 @@ export interface SiteSettings {
   phone: string;
   email: string;
   address: string;
+  locationLink?: string;
   whatsapp: string;
+  socialMedia?: {
+    facebook?: string;
+    instagram?: string;
+    telegram?: string;
+    tiktok?: string;
+  };
   businessHours: string[];
   footerDescription: string;
   vehicleCategories: string[];

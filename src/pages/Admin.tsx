@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Plus, RefreshCw, Save, Trash2 } from "lucide-react";
+import { LogOut, Plus, RefreshCw, Save, Trash2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +17,7 @@ import {
   useVehicles,
 } from "@/hooks/use-site-data";
 import { PageError, PageLoader } from "@/components/PageState";
+import { adminAuth, api } from "@/lib/api";
 import type {
   FeatureItem,
   FaqItem,
@@ -213,6 +215,7 @@ const InquiriesPanel = ({
 
 const Admin = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const contentQuery = useSiteContent();
   const vehiclesQuery = useVehicles();
   const inquiriesQuery = useInquiries();
@@ -253,6 +256,8 @@ const Admin = () => {
     [],
   );
   const [newVehicle, setNewVehicle] = useState<Vehicle>(blankVehicle);
+  const [sectionPath, setSectionPath] = useState("home.heroSlides");
+  const [sectionJson, setSectionJson] = useState("");
 
   if (contentQuery.isLoading || vehiclesQuery.isLoading || inquiriesQuery.isLoading || !draftContent) {
     return (
@@ -286,6 +291,51 @@ const Admin = () => {
     }
   };
 
+  const logout = async () => {
+    try {
+      await api.logoutAdmin();
+    } catch {
+      // Ignore logout API errors and clear local token anyway.
+    } finally {
+      adminAuth.clearToken();
+      navigate("/admin/login", { replace: true });
+    }
+  };
+
+  const loadSection = async () => {
+    try {
+      const data = await api.getAdminSection(sectionPath);
+      setSectionJson(JSON.stringify(data.value, null, 2));
+      toast({ title: "Section loaded." });
+    } catch (error) {
+      toast({ title: (error as Error).message, variant: "destructive" });
+    }
+  };
+
+  const saveSection = async () => {
+    try {
+      const nextValue = JSON.parse(sectionJson);
+      await api.updateAdminSection(sectionPath, nextValue);
+      const latestContent = await api.getContent();
+      setDraftContent(structuredClone(latestContent));
+      toast({ title: "Section saved." });
+    } catch (error) {
+      toast({ title: (error as Error).message || "Invalid JSON.", variant: "destructive" });
+    }
+  };
+
+  const removeSection = async () => {
+    try {
+      await api.deleteAdminSection(sectionPath);
+      const latestContent = await api.getContent();
+      setDraftContent(structuredClone(latestContent));
+      setSectionJson("");
+      toast({ title: "Section deleted." });
+    } catch (error) {
+      toast({ title: (error as Error).message, variant: "destructive" });
+    }
+  };
+
   return (
     <Layout>
       <section className="border-b border-border bg-surface py-14">
@@ -298,6 +348,9 @@ const Admin = () => {
             </p>
           </div>
           <div className="flex gap-3">
+            <Button type="button" variant="outline" onClick={logout}>
+              <LogOut className="mr-2 h-4 w-4" /> Logout
+            </Button>
             <Button type="button" variant="outline" onClick={() => setDraftContent(structuredClone(contentQuery.data!))}>
               <RefreshCw className="mr-2 h-4 w-4" /> Reset Draft
             </Button>
@@ -435,7 +488,7 @@ const Admin = () => {
 
         <JsonSectionEditor
           title="Site Settings"
-          description="Brand name, contact details, footer copy, and vehicle categories."
+          description="Brand name, contact details, social media links, map/location link, footer copy, and vehicle categories."
           value={draftContent.site}
           onApply={(nextValue) => setDraftContent({ ...draftContent, site: nextValue as SiteContent["site"] })}
         />
@@ -496,6 +549,27 @@ const Admin = () => {
           value={draftContent.contactPage}
           onApply={(nextValue) => setDraftContent({ ...draftContent, contactPage: nextValue as SiteContent["contactPage"] })}
         />
+
+        <section className="rounded-3xl border border-border bg-card p-6">
+          <h2 className="font-heading text-2xl font-bold text-foreground">Dynamic Section CRUD</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Manage any content path dynamically (for example: <code>home.heroSlides</code>, <code>aboutPage.story</code>, <code>site.socialMedia</code>).
+          </p>
+
+          <div className="mt-4 grid gap-4 md:grid-cols-[1fr_auto_auto_auto]">
+            <Input value={sectionPath} onChange={(event) => setSectionPath(event.target.value)} placeholder="Section path" />
+            <Button type="button" variant="outline" onClick={loadSection}>Load</Button>
+            <Button type="button" onClick={saveSection}>Save</Button>
+            <Button type="button" variant="destructive" onClick={removeSection}>Delete</Button>
+          </div>
+
+          <Textarea
+            className="mt-4 min-h-[18rem] font-mono text-sm"
+            value={sectionJson}
+            onChange={(event) => setSectionJson(event.target.value)}
+            placeholder="Section JSON appears here..."
+          />
+        </section>
 
         <section className="rounded-3xl border border-border bg-card p-6">
           <h2 className="font-heading text-2xl font-bold text-foreground">Inventory CRUD</h2>
