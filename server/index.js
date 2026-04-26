@@ -13,6 +13,9 @@ const distDir = path.join(projectRoot, "dist");
 
 const app = express();
 const port = Number(process.env.PORT || 4000);
+const adminUsername = process.env.ADMIN_USERNAME || "admin";
+const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
+const activeTokens = new Set();
 
 app.use(cors());
 app.use(express.json({ limit: "2mb" }));
@@ -35,8 +38,50 @@ const assertObject = (value, message) => {
   }
 };
 
+const getBearerToken = (authorizationHeader = "") => {
+  const [scheme, token] = authorizationHeader.split(" ");
+  if (scheme?.toLowerCase() !== "bearer" || !token) return null;
+  return token;
+};
+
+const requireAdminAuth = (req, res, next) => {
+  const token = getBearerToken(req.headers.authorization);
+
+  if (!token || !activeTokens.has(token)) {
+    res.status(401).json({ message: "Unauthorized. Please log in as admin." });
+    return;
+  }
+
+  next();
+};
+
 app.get("/api/health", (_req, res) => {
   res.json({ ok: true });
+});
+
+app.post("/api/auth/login", (req, res) => {
+  const username = req.body?.username || "";
+  const password = req.body?.password || "";
+
+  if (username !== adminUsername || password !== adminPassword) {
+    res.status(401).json({ message: "Invalid username or password." });
+    return;
+  }
+
+  const token = randomUUID();
+  activeTokens.add(token);
+  res.json({ token });
+});
+
+app.get("/api/auth/session", (req, res) => {
+  const token = getBearerToken(req.headers.authorization);
+  res.json({ authenticated: Boolean(token && activeTokens.has(token)) });
+});
+
+app.post("/api/auth/logout", requireAdminAuth, (req, res) => {
+  const token = getBearerToken(req.headers.authorization);
+  if (token) activeTokens.delete(token);
+  res.status(204).send();
 });
 
 app.get("/api/content", async (_req, res, next) => {
@@ -48,7 +93,7 @@ app.get("/api/content", async (_req, res, next) => {
   }
 });
 
-app.put("/api/content", async (req, res, next) => {
+app.put("/api/content", requireAdminAuth, async (req, res, next) => {
   try {
     assertObject(req.body, "A content object is required.");
     const db = await readDb();
@@ -69,7 +114,7 @@ app.get("/api/vehicles", async (_req, res, next) => {
   }
 });
 
-app.post("/api/vehicles", async (req, res, next) => {
+app.post("/api/vehicles", requireAdminAuth, async (req, res, next) => {
   try {
     assertObject(req.body, "Vehicle payload is required.");
     const db = await readDb();
@@ -82,7 +127,7 @@ app.post("/api/vehicles", async (req, res, next) => {
   }
 });
 
-app.put("/api/vehicles/:id", async (req, res, next) => {
+app.put("/api/vehicles/:id", requireAdminAuth, async (req, res, next) => {
   try {
     assertObject(req.body, "Vehicle payload is required.");
     const db = await readDb();
@@ -102,7 +147,7 @@ app.put("/api/vehicles/:id", async (req, res, next) => {
   }
 });
 
-app.delete("/api/vehicles/:id", async (req, res, next) => {
+app.delete("/api/vehicles/:id", requireAdminAuth, async (req, res, next) => {
   try {
     const db = await readDb();
     const remainingVehicles = db.vehicles.filter((vehicle) => vehicle.id !== req.params.id);
@@ -120,7 +165,7 @@ app.delete("/api/vehicles/:id", async (req, res, next) => {
   }
 });
 
-app.get("/api/inquiries", async (_req, res, next) => {
+app.get("/api/inquiries", requireAdminAuth, async (_req, res, next) => {
   try {
     const db = await readDb();
     const inquiries = [...db.inquiries].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -153,7 +198,7 @@ app.post("/api/inquiries", async (req, res, next) => {
   }
 });
 
-app.delete("/api/inquiries/:id", async (req, res, next) => {
+app.delete("/api/inquiries/:id", requireAdminAuth, async (req, res, next) => {
   try {
     const db = await readDb();
     const remainingInquiries = db.inquiries.filter((inquiry) => inquiry.id !== req.params.id);

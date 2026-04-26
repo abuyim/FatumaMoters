@@ -20,7 +20,14 @@
         "Passenger Bajaj",
         "Cargo Bajaj",
         "Fleet Packages"
-      ]
+      ],
+      "locationLink": "https://maps.google.com/?q=Bole+Road,+Addis+Ababa",
+      "socialMedia": {
+        "facebook": "https://facebook.com/fatumamotors",
+        "instagram": "https://instagram.com/fatumamotors",
+        "telegram": "https://t.me/fatumamotors",
+        "tiktok": "https://www.tiktok.com/@fatumamotors"
+      }
     },
     "home": {
       "heroSlides": [

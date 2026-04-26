@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Plus, RefreshCw, Save, Trash2 } from "lucide-react";
+import { LogOut, Plus, RefreshCw, Save, Trash2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +17,7 @@ import {
   useVehicles,
 } from "@/hooks/use-site-data";
 import { PageError, PageLoader } from "@/components/PageState";
+import { adminAuth, api } from "@/lib/api";
 import type {
   FeatureItem,
   FaqItem,
@@ -213,6 +215,7 @@ const InquiriesPanel = ({
 
 const Admin = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const contentQuery = useSiteContent();
   const vehiclesQuery = useVehicles();
   const inquiriesQuery = useInquiries();
@@ -286,6 +289,17 @@ const Admin = () => {
     }
   };
 
+  const logout = async () => {
+    try {
+      await api.logoutAdmin();
+    } catch {
+      // Ignore logout API errors and clear local token anyway.
+    } finally {
+      adminAuth.clearToken();
+      navigate("/admin/login", { replace: true });
+    }
+  };
+
   return (
     <Layout>
       <section className="border-b border-border bg-surface py-14">
@@ -298,6 +312,9 @@ const Admin = () => {
             </p>
           </div>
           <div className="flex gap-3">
+            <Button type="button" variant="outline" onClick={logout}>
+              <LogOut className="mr-2 h-4 w-4" /> Logout
+            </Button>
             <Button type="button" variant="outline" onClick={() => setDraftContent(structuredClone(contentQuery.data!))}>
               <RefreshCw className="mr-2 h-4 w-4" /> Reset Draft
             </Button>
@@ -435,7 +452,7 @@ const Admin = () => {
 
         <JsonSectionEditor
           title="Site Settings"
-          description="Brand name, contact details, footer copy, and vehicle categories."
+          description="Brand name, contact details, social media links, map/location link, footer copy, and vehicle categories."
           value={draftContent.site}
           onApply={(nextValue) => setDraftContent({ ...draftContent, site: nextValue as SiteContent["site"] })}
         />
