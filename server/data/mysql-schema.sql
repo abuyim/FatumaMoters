@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS site_content (
+  id INT PRIMARY KEY,
+  content_json LONGTEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS vehicles (
+  id VARCHAR(191) PRIMARY KEY,
+  data_json LONGTEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS inquiries (
+  id VARCHAR(191) PRIMARY KEY,
+  data_json LONGTEXT NOT NULL,
+  created_at DATETIME NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS admin_users (
+  username VARCHAR(191) PRIMARY KEY,
+  password_hash VARCHAR(255) NOT NULL,
+  created_at DATETIME NOT NULL
+);
