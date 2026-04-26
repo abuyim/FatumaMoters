@@ -56,6 +56,25 @@ export const api = {
       method: "POST",
       headers: { ...getAuthHeaders() },
     }).then(toJson<void>),
+  getAdminSectionKeys: () =>
+    fetch("/api/admin/sections", {
+      headers: { ...getAuthHeaders() },
+    }).then(toJson<{ keys: string[] }>),
+  getAdminSection: (path: string) =>
+    fetch(`/api/admin/sections/${encodeURIComponent(path)}`, {
+      headers: { ...getAuthHeaders() },
+    }).then(toJson<{ path: string; value: unknown }>),
+  updateAdminSection: (path: string, value: unknown) =>
+    fetch(`/api/admin/sections/${encodeURIComponent(path)}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", ...getAuthHeaders() },
+      body: JSON.stringify({ value }),
+    }).then(toJson<{ message: string; path: string; value: unknown }>),
+  deleteAdminSection: (path: string) =>
+    fetch(`/api/admin/sections/${encodeURIComponent(path)}`, {
+      method: "DELETE",
+      headers: { ...getAuthHeaders() },
+    }).then(toJson<void>),
   getContent: () => fetch("/api/content").then(toJson<SiteContent>),
   updateContent: (content: SiteContent) =>
     fetch("/api/content", {

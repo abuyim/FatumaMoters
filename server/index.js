@@ -44,11 +44,52 @@ const requireAdminAuth = (req, res, next) => {
   next();
 };
 
+const getByPath = (source, path) =>
+  path.split(".").reduce((value, key) => (value && typeof value === "object" ? value[key] : undefined), source);
+
+const setByPath = (source, path, nextValue) => {
+  const keys = path.split(".").filter(Boolean);
+  if (keys.length === 0) return source;
+
+  const draft = structuredClone(source);
+  let cursor = draft;
+
+  for (let index = 0; index < keys.length - 1; index += 1) {
+    const key = keys[index];
+    if (!cursor[key] || typeof cursor[key] !== "object") {
+      cursor[key] = {};
+    }
+    cursor = cursor[key];
+  }
+
+  cursor[keys[keys.length - 1]] = nextValue;
+  return draft;
+};
+
+const deleteByPath = (source, path) => {
+  const keys = path.split(".").filter(Boolean);
+  if (keys.length === 0) return source;
+
+  const draft = structuredClone(source);
+  let cursor = draft;
+
+  for (let index = 0; index < keys.length - 1; index += 1) {
+    const key = keys[index];
+    if (!cursor[key] || typeof cursor[key] !== "object") {
+      return draft;
+    }
+    cursor = cursor[key];
+  }
+
+  delete cursor[keys[keys.length - 1]];
+  return draft;
+};
+
 app.get("/api/health", (_req, res) => {
   res.json({ ok: true });
 });
 
-app.post("/api/auth/login", async (req, res, next) => {
+const handleAdminLogin = async (req, res, next) => {
   try {
     const username = req.body?.username || "";
     const password = req.body?.password || "";
@@ -66,7 +107,10 @@ app.post("/api/auth/login", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-});
+};
+
+app.post("/api/auth/login", handleAdminLogin);
+app.post("/api/login", handleAdminLogin);
 
 app.get("/api/auth/session", (req, res) => {
   const token = getBearerToken(req.headers.authorization);
@@ -77,6 +121,51 @@ app.post("/api/auth/logout", requireAdminAuth, (req, res) => {
   const token = getBearerToken(req.headers.authorization);
   if (token) activeTokens.delete(token);
   res.status(204).send();
+});
+
+app.get("/api/admin/sections", requireAdminAuth, async (_req, res, next) => {
+  try {
+    const content = await store.getContent();
+    res.json({ keys: Object.keys(content || {}) });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/api/admin/sections/:path", requireAdminAuth, async (req, res, next) => {
+  try {
+    const content = await store.getContent();
+    const value = getByPath(content, req.params.path);
+    if (typeof value === "undefined") {
+      res.status(404).json({ message: `Section '${req.params.path}' not found.` });
+      return;
+    }
+    res.json({ path: req.params.path, value });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.put("/api/admin/sections/:path", requireAdminAuth, async (req, res, next) => {
+  try {
+    const content = await store.getContent();
+    const updated = setByPath(content, req.params.path, req.body?.value);
+    await store.updateContent(updated);
+    res.json({ message: "Section updated.", path: req.params.path, value: getByPath(updated, req.params.path) });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.delete("/api/admin/sections/:path", requireAdminAuth, async (req, res, next) => {
+  try {
+    const content = await store.getContent();
+    const updated = deleteByPath(content, req.params.path);
+    await store.updateContent(updated);
+    res.status(204).send();
+  } catch (error) {
+    next(error);
+  }
 });
 
 app.get("/api/content", async (_req, res, next) => {
