@@ -13,7 +13,8 @@
     "preview": "node --env-file-if-exists=.env server/index.js",
     "test": "vitest run",
     "test:watch": "vitest",
-    "migrate:mysql": "node server/scripts/migrate-mysql.js"
+    "migrate:mysql": "node --env-file-if-exists=.env server/scripts/migrate-mysql.js",
+    "seed:mysql": "node --env-file-if-exists=.env server/scripts/seed-mysql.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

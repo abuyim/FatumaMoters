@@ -14,11 +14,7 @@ import { formatPrice } from "@/data/vehicles";
 const galleryImages = [
   "/images/photo_2026-04-24_19-51-31.jpg",
   "/images/photo_2026-04-24_19-51-31 (2).jpg",
-  "/images/photo_2026-04-24_19-51-31 (3).jpg",
   "/images/photo_2026-04-24_19-51-32.jpg",
-  "/images/photo_2026-04-24_19-51-32 (2).jpg",
-  "/images/photo_2026-04-24_19-51-32 (3).jpg",
-  "/images/photo_2026-04-24_19-52-16.jpg",
   "/images/photo_2026-04-25_15-12-05.jpg",
 ];
 

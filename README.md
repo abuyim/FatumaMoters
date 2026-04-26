@@ -47,10 +47,14 @@ If MySQL or `mysql2` is unavailable at runtime, the server automatically falls b
    - `MYSQL_DATABASE=site_fatumamotors_db`
 2. Run migration script (creates DB if needed and applies schema):
    - `npm run migrate:mysql`
-3. Start the app:
+3. Seed initial data from `server/data/db.json`:
+   - `npm run seed:mysql`
+4. Start the app:
    - `npm run dev` (or `npm run preview`)
 
 Migration script path: `server/scripts/migrate-mysql.js`.
+Seed script path: `server/scripts/seed-mysql.js`.
+Both scripts automatically load values from `.env` when it exists.
 
 ## Managed content in DB
 When MySQL is enabled, these are stored in MySQL and managed by admin:
