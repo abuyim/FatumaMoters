@@ -35,7 +35,7 @@ export class DataStore {
         port: Number(process.env.MYSQL_PORT || 3306),
         user: process.env.MYSQL_USER || "root",
         password: process.env.MYSQL_PASSWORD || "",
-        database: process.env.MYSQL_DATABASE || "fatumamotors",
+        database: process.env.MYSQL_DATABASE || "site_fatumamotors_db",
         connectionLimit: Number(process.env.MYSQL_CONNECTION_LIMIT || 10),
       });
     } catch (error) {

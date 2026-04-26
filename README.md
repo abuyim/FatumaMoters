@@ -21,7 +21,7 @@ Set these to enable MySQL:
 - `MYSQL_PORT` (optional, default `3306`)
 - `MYSQL_USER`
 - `MYSQL_PASSWORD`
-- `MYSQL_DATABASE` (optional, default `fatumamotors`)
+- `MYSQL_DATABASE` (optional, default `site_fatumamotors_db`)
 - `MYSQL_CONNECTION_LIMIT` (optional, default `10`)
 
 ### MySQL schema
@@ -29,6 +29,20 @@ Schema file: `server/data/mysql-schema.sql`
 
 The app auto-creates required tables on startup and seeds data from `server/data/db.json` when MySQL tables are empty.
 If MySQL or `mysql2` is unavailable at runtime, the server automatically falls back to JSON storage.
+
+### How to connect your DB (`site_fatumamotors_db`) and run migration
+1. Set environment variables before running the server:
+   - `MYSQL_HOST=127.0.0.1`
+   - `MYSQL_PORT=3306`
+   - `MYSQL_USER=YOUR_USER`
+   - `MYSQL_PASSWORD=YOUR_PASSWORD`
+   - `MYSQL_DATABASE=site_fatumamotors_db`
+2. Run migration script (creates DB if needed and applies schema):
+   - `npm run migrate:mysql`
+3. Start the app:
+   - `npm run dev` (or `npm run preview`)
+
+Migration script path: `server/scripts/migrate-mysql.js`.
 
 ## Managed content in DB
 When MySQL is enabled, these are stored in MySQL and managed by admin:

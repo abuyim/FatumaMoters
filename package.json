@@ -12,7 +12,8 @@
     "lint": "eslint .",
     "preview": "node server/index.js",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "migrate:mysql": "node server/scripts/migrate-mysql.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
