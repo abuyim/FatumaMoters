@@ -34,11 +34,7 @@
         {
           "id": "hero-slide-1",
           "mediaType": "image",
-<<<<<<< HEAD
-          "mediaUrl": "/images/hero-image-01.png",
-=======
           "mediaUrl": "/hero-image-01.png",
->>>>>>> 8fb742ff0520f7ab73c30c912ae2f4754aa0b6d1
           "eyebrow": "FatumaMotors",
           "title": "Your trusted source for motorcycles and Bajaj vehicles",
           "description": "Reliable motorcycles and three-wheelers for personal mobility, business transport, and growing delivery fleets.",
@@ -50,11 +46,7 @@
         {
           "id": "hero-slide-2",
           "mediaType": "image",
-<<<<<<< HEAD
-          "mediaUrl": "/images/bajaj03.png",
-=======
           "mediaUrl": "/images/photo_2026-04-24_19-51-31.jpg",
->>>>>>> 8fb742ff0520f7ab73c30c912ae2f4754aa0b6d1
           "eyebrow": "Bajaj Collection",
           "title": "Bajaj 01 now available",
           "description": "See our latest Bajaj models with ready stock and flexible purchase options.",
@@ -66,11 +58,7 @@
         {
           "id": "hero-slide-3",
           "mediaType": "image",
-<<<<<<< HEAD
-          "mediaUrl": "/images/bajaj01.png",
-=======
           "mediaUrl": "/images/photo_2026-04-24_19-51-31 (2).jpg",
->>>>>>> 8fb742ff0520f7ab73c30c912ae2f4754aa0b6d1
           "eyebrow": "Bajaj Collection",
           "title": "Bajaj 02 for daily business",
           "description": "Built for passenger and delivery operations with dependable performance.",
@@ -82,11 +70,7 @@
         {
           "id": "hero-slide-4",
           "mediaType": "image",
-<<<<<<< HEAD
-          "mediaUrl": "/images/bajaj02.png",
-=======
           "mediaUrl": "/images/photo_2026-04-24_19-51-32.jpg",
->>>>>>> 8fb742ff0520f7ab73c30c912ae2f4754aa0b6d1
           "eyebrow": "Bajaj Collection",
           "title": "Bajaj 03 fleet-ready options",
           "description": "Great options for fleet buyers looking for value and long-term support.",
@@ -98,11 +82,7 @@
         {
           "id": "hero-slide-5",
           "mediaType": "image",
-<<<<<<< HEAD
-          "mediaUrl": "/images/bajaj04.png",
-=======
           "mediaUrl": "/images/photo_2026-04-25_15-12-05.jpg",
->>>>>>> 8fb742ff0520f7ab73c30c912ae2f4754aa0b6d1
           "eyebrow": "Bajaj Collection",
           "title": "Bajaj 04 passenger model",
           "description": "Comfortable passenger-focused model with strong earning potential.",
